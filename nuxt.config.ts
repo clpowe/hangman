@@ -7,12 +7,22 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  extends: [
+    '../layers/ui',
+    '../layers/api'
+  ],
+
+  runtimeConfig: {
+    geminiAPI: ''
+  },
+
   modules: [
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/eslint',
     '@nuxt/ui',
-    '@nuxt/scripts'
+    '@nuxt/scripts',
+    '@vueuse/nuxt'
   ]
 })
