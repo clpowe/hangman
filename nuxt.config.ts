@@ -24,5 +24,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/scripts',
     '@vueuse/nuxt'
-  ]
+  ],
+
+  css: ['~/assets/css/main.css']
 })

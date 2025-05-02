@@ -34,32 +34,38 @@ function handleGuess() {
 </script>
 
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <div v-if="gameState === 'lost'">
-      WHOMP WHOMP! The word was {{ word }}
-      <button @click="handlePlayAgain">Play Again</button>
-    </div>
-    <div v-if="gameState === 'won'">
-      LETS GOOOOOO
-      <button @click="handlePlayAgain">Play Again</button>
-    </div>
-    <div>
-      <p>Hint: {{ hint }}</p>
-      <button @click="fetchWord()">Fetch new word</button>
-    </div>
-    <div class="guess">
-      input: <input v-model="letter" @keydown.enter="handleGuess" />
-      <button @click="handleGuess">Guess</button>
-    </div>
-    <div class="">
-      display: <span v-for="(letter, i) in guesses" :key="i">{{ !word?.includes(letter) ? letter : '' }}</span>
-    </div>
+  <UApp>
+    <UContainer>
+      <div>
+        <NuxtRouteAnnouncer />
+        <div v-if="gameState === 'lost'">
+          WHOMP WHOMP! The word was {{ word }}
+          <UButton @click="handlePlayAgain">Play Again</UButton>
+        </div>
+        <div v-if="gameState === 'won'">
+          LETS GOOOOOO
+          <UButton @click="handlePlayAgain">Play Again</UButton>
+        </div>
+        <div>
+          <p>Hint: {{ hint }}</p>
+          <UButton @click="fetchWord()">Fetch new word</UButton>
+        </div>
+        <div class="guess">
+          <UInput maxlength="1" v-model="letter" @keydown.enter="handleGuess" />
+          <UButton @click="handleGuess">Guess</UButton>
+        </div>
+        <div class="">
+          display: <span v-for="(letter, i) in guesses" :key="i">{{ !word?.includes(letter) ? letter : '' }}</span>
+        </div>
 
-    <div class="word">
-      <div class="letter" v-for="(letter, i) in word" :key="i">{{ guesses.includes(letter) ? letter : '' }}</div>
-    </div>
-  </div>
+        <div class="word">
+          <div class="letter" v-for="(letter, i) in word" :key="i">{{ guesses.includes(letter) ? letter : '' }}</div>
+        </div>
+
+        <Keyboard />
+      </div>
+    </UContainer>
+  </UApp>
 </template>
 
 <style>
@@ -73,7 +79,7 @@ function handleGuess() {
 }
 
 .letter {
-  border: 1px solid black;
+  border: 1px solid var(--ui-primary);
   height: 3rem;
   width: 3rem;
   font-size: 1.5rem;
