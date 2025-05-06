@@ -21,9 +21,9 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/eslint',
-    '@nuxt/ui',
     '@nuxt/scripts',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    '@unocss/nuxt',
   ],
 
   css: ['~/assets/css/main.css']

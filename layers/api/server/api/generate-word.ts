@@ -9,6 +9,24 @@ export default defineEventHandler(async (event) => {
 
   const ai = new GoogleGenAI({ apiKey })
 
+  const text1 =  `You will be provided with a list of words that have already been used.
+    Used words: ${usedWords.join(', ')}
+    
+    Follow these instructions:
+    1. Generate a word that is appropriate for a 6th-grade level.
+    2. Create a definition as a hint for the word. The definition should be challenging but not too difficult for a 6th grader to solve.
+    3. Ensure that the hint is unique and has not been used before.
+    4. Do not use any of the words in the list of used words.
+    5. Output the word and the definition in the following format:
+    
+    **Word:** [word]
+    **Hint (definition):** [definition]
+    
+    Example:
+    
+    **Word:** Planet
+    **Hint (Definition):** I am a large ball of rock or gas that orbits a star. What am I?`;
+
   // To run this code you need to install the following dependencies:
   // npm install @google/genai mime
   // npm install -D @types/node
@@ -34,7 +52,7 @@ export default defineEventHandler(async (event) => {
       role: 'user',
       parts: [
         {
-          text: `Give me an english word and a hint to what the word is. The word should be on a 6th grade level. DO NOT REPEAT the same hint. DO NOT us the words in this list array ${usedWords}`,
+          text: text1,
         },
       ],
     },

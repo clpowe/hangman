@@ -1,4 +1,8 @@
 <script setup lang="ts">
+
+
+const { guessLetter, guesses } = useHangman()
+
 const alphabet =  [
     'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
@@ -8,15 +12,17 @@ const alphabet =  [
 
 <template>
   <div class="keyboard">
-    <UButton  v-for="letter in alphabet" variant="ghost">
-     <UKbd size="lg"  :key="letter" :value="letter" />
-    </UButton>
+    <button  v-for="letter in alphabet" size="xl" :disabled="guesses.includes(letter)" variant="outline" @click="guessLetter(letter)">
+     {{ letter }}
+    </button>
   </div>
 </template>
 
 <style scoped>
 .keyboard {
   display: flex;
+  gap: 0.5rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 </style>

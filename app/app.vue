@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useHangman } from '../composables/useHangman'
 
-const { word, hint, errors, correct, fetchWord, guessLetter, guesses, usedWords, gameState, correctLetters } = useHangman()
+const {score, word, hint, errors, correct, fetchWord, guessLetter, guesses, usedWords, gameState, correctLetters } = useHangman()
 
 const letter = ref<string>("")
-const state = useLocalStorage('used-words', usedWords.value)
+const state = useLocalStorage('used-words', [])
 
 console.log(gameState.value)
+
 
 
 onMounted(() => {
@@ -34,38 +34,47 @@ function handleGuess() {
 </script>
 
 <template>
-  <UApp>
-    <UContainer>
-      <div>
-        <NuxtRouteAnnouncer />
+<div>
+    <NuxtRouteAnnouncer />
+    <header>
+      <h1>Hangman</h1>
+    </header>
+    <div class="h-screen">
+      <div>Score: <span>{{ score }}</span> </div>
+      <div class="h-full">
+       <div>
+        <p class="">Hint: </p>
+        <p>{{ hint }}</p>
+       </div>
         <div v-if="gameState === 'lost'">
           WHOMP WHOMP! The word was {{ word }}
-          <UButton @click="handlePlayAgain">Play Again</UButton>
+          <button @click="handlePlayAgain()">Play Again</button>
         </div>
         <div v-if="gameState === 'won'">
           LETS GOOOOOO
-          <UButton @click="handlePlayAgain">Play Again</UButton>
+          <button @click="handlePlayAgain()">Play Again</button>
         </div>
-        <div>
-          <p>Hint: {{ hint }}</p>
+        <!-- <div>
+          <p class="text-5xl">Hint: {{ hint }}</p>
           <UButton @click="fetchWord()">Fetch new word</UButton>
-        </div>
-        <div class="guess">
+        </div> -->
+        <!-- <div class="guess">
           <UInput maxlength="1" v-model="letter" @keydown.enter="handleGuess" />
           <UButton @click="handleGuess">Guess</UButton>
-        </div>
-        <div class="">
-          display: <span v-for="(letter, i) in guesses" :key="i">{{ !word?.includes(letter) ? letter : '' }}</span>
-        </div>
+        </div> -->
+        <!-- <div class="">
+         <span v-for="(letter, i) in guesses" :key="i">{{ !word?.includes(letter) ? letter : '' }}</span>
+        </div> -->
 
         <div class="word">
-          <div class="letter" v-for="(letter, i) in word" :key="i">{{ guesses.includes(letter) ? letter : '' }}</div>
+          <div class="letter" v-for="(letter, i) in word" :key="i">{{ guesses.includes(letter) ? letter : '' }}</div>    
         </div>
+        <button>Guess Word</button>
 
         <Keyboard />
       </div>
-    </UContainer>
-  </UApp>
+  </div>
+</div>
 </template>
 
 <style>
@@ -76,13 +85,15 @@ function handleGuess() {
 .word {
   display: flex;
   gap: .5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
 }
 
 .letter {
-  border: 1px solid var(--ui-primary);
-  height: 3rem;
-  width: 3rem;
-  font-size: 1.5rem;
+  border-bottom: 1px solid black;
+  height: 1.25rem;
+  width: 1.25rem;
+  font-size: 1rem;
   display: grid;
   place-items: center;
 }

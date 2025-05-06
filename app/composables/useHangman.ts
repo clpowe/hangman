@@ -1,6 +1,12 @@
+import data from '../assets/words.json';
+
 type WORD = {
   word: string;
-  hint: string;
+  definition: string;
+  usage: {
+    sentence: string;
+    source: string;
+  };
 };
 
 export const useHangman = () => {
@@ -10,27 +16,47 @@ export const useHangman = () => {
   const guesses = useState<string[]>('guesses', () => []);
   const errors = useState('error', () => 0);
   const correct = useState('correct', () => 0);
+  const score = useState('score', () => 0);
   let correctLetters = useState('correctLetters', () => new Set())
+  const state = useLocalStorage('used-words', usedWords.value)
+  function selectWord(){
+    try {
+      const randomIndex = Math.floor(Math.random() * data.length);
+      return data[randomIndex];
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const fetchWord = async () => {
-    let fetchedData: WORD | null = null;
+    
+    let fetchedData: WORD | undefined = undefined;
 
+    fetchedData = selectWord()
+    if(usedWords.value.length === data.length){
 
-    fetchedData = await $fetch<WORD>('/api/generate-word', {
-      method: 'POST',
-      body: JSON.stringify(usedWords.value),
-    });
+      state.value = []
+    }
+    if(usedWords.value.includes(fetchedData?.word!)){
+      return fetchWord()
+    }
 
-    if (!fetchedData) return;
+    // fetchedData = await $fetch<WORD>('/api/generate-word', {
+    //   method: 'POST',
+    //   body: JSON.stringify(usedWords.value),
+    // });
 
-    word.value = fetchedData.word.toLowerCase();
-    hint.value = fetchedData.hint;
+    // if (!fetchedData) return;
+
+    word.value = fetchedData?.word.toLowerCase();
+    hint.value = fetchedData?.definition;
     correctLetters.value = new Set(word.value?.split(''))
-    usedWords.value.push(word.value);
+    usedWords.value.push(word.value!);
     console.log(usedWords.value);
   };
 
   const guessLetter = (letter: string) => {
+    console.log(letter)
     const lower = letter.toLowerCase();
     if (guesses.value.includes(lower)) {
       return;
@@ -44,6 +70,7 @@ export const useHangman = () => {
   watch(correct, () => {
     if (correct.value === correctLetters.value.size) {
       gameState.value = 'won'
+      score.value++
       correct.value = 0
       errors.value = 0
       console.log('WON')
@@ -58,6 +85,6 @@ export const useHangman = () => {
     }
   })
 
-  return { word, hint, correct, guesses, errors, fetchWord, guessLetter, usedWords, gameState, correctLetters };
+  return { score, word, hint, correct, guesses, errors, fetchWord, guessLetter, usedWords, gameState, correctLetters };
 };
 
