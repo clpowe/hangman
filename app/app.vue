@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import '@unocss/reset/tailwind.css'
+
 const isDark = useDark({
   attribute: 'class',
   valueDark: 'dark',
@@ -96,7 +98,7 @@ useHead({
       <div>Score: <span>{{ score }}</span> </div>
       <div>Remaining Guesses: <span>{{ remainingGuesses }}</span> </div>
       <div class="h-full">
-       <div>
+       <div class="hint">
         <p class="">Hint: </p>
         <p>{{ hint }}</p>
        </div>

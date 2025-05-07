@@ -93,6 +93,15 @@
     --error-dark:var(--color-red-200);
     --warning-dark:var(--color-yellow-200);
     --success-dark:var(--color-green-200); 
+
+
+    /* size */
+    --size-xs: .5rem;
+    --size-s: 1rem;
+    --size-m: 1.5rem;
+    --size-l: 2rem;
+    --size-xl: 3rem;
+    --size-xxl: 5rem;
 }
 
 html {
