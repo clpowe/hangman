@@ -28,6 +28,8 @@ export const useHangman = () => {
     }
   }
 
+  const remainingGuesses = computed(() => 6 - errors.value) 
+
   const fetchWord = async () => {
     
     let fetchedData: WORD | undefined = undefined;
@@ -52,7 +54,7 @@ export const useHangman = () => {
     hint.value = fetchedData?.definition;
     correctLetters.value = new Set(word.value?.split(''))
     usedWords.value.push(word.value!);
-    console.log(usedWords.value);
+   
   };
 
   const guessLetter = (letter: string) => {
@@ -64,6 +66,15 @@ export const useHangman = () => {
     guesses.value.push(lower);
     if (!word.value?.includes(lower)) { errors.value++; } else { correct.value++ }
   };
+
+  function guessWord(w:any) {  
+    console.log(w.value, word.value)
+    if (word.value === w.value.toLowerCase()) {
+      console.log("WIN")
+       gameState.value = 'won'
+    }
+   guesses.value.push(w)
+  }
 
   const gameState = useState<'playing' | 'won' | 'lost'>('playing', () => 'playing')
 
@@ -85,6 +96,6 @@ export const useHangman = () => {
     }
   })
 
-  return { score, word, hint, correct, guesses, errors, fetchWord, guessLetter, usedWords, gameState, correctLetters };
+  return { guessWord, remainingGuesses,score, word, hint, correct, guesses, errors, fetchWord, guessLetter, usedWords, gameState, correctLetters };
 };
 

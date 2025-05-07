@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@vueuse/nuxt',
     '@unocss/nuxt',
+    'reka-ui/nuxt'
   ],
 
   css: ['~/assets/css/main.css']
