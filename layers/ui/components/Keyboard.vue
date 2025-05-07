@@ -12,7 +12,7 @@ const alphabet =  [
 
 <template>
   <div class="keyboard">
-    <UButton  v-for="letter in alphabet" size="xl" class="grid content-center place-content-center w-12 h-12 bg-gray-100 dark:bg-none"
+    <UButton  v-for="letter in alphabet" size="xl" class="grid uppercase content-center place-content-center w-12 h-12 bg-[var(--fill)]  text-[var(--text-strong)]"
     :class="guesses.includes(letter) && !correctLetters.has(letter) ? 'disabled:bg-red-500 border-2 disabled:border-red-500' : 'disabled:bg-green-500 border-2 disabled:border-green-500'"
       :disabled="guesses.includes(letter)"  @click="guessLetter(letter)" 
     :ui="{

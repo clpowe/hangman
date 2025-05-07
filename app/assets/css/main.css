@@ -4,8 +4,6 @@
 @source "../../../layers/ui";
 
 :root {
-
-
     color-scheme: light dark;
 
      /* brand */
@@ -174,5 +172,6 @@ html.light {
 
 }
 body {
-   
+   --ui-bg: var(--background);
+   --ui-primary: var(--brand);
 }

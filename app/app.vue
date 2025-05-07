@@ -138,7 +138,7 @@ useHead({
 }
 
 .letter {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--stroke-strong);
   height: 1.25rem;
   width: 1.25rem;
   font-size: 1rem;
