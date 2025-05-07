@@ -1,27 +1,6 @@
 <script setup lang="ts">
-import '@unocss/reset/tailwind.css'
 
-const isDark = useDark({
-  attribute: 'class',
-  valueDark: 'dark',
-  valueLight: 'light',
-})
-const colorMode = useColorMode({
 
-  modes:{
-    dark: 'dark',
-    light: 'light'
-  },
-  attribute: 'class',
-})
-const toggleDark = useToggle(isDark)
-const themeState = useLocalStorage('vueuse-color-scheme', isDark ? 'dark' : 'light')
-
-const useToggleDark = () =>{
-  themeState.value = isDark.value ? 'dark' : 'light'
-  toggleDark()
-  colorMode.value = isDark.value ? 'dark' : 'light'
-}
 
 const { guessWord, remainingGuesses, score, word, hint, errors, correct, fetchWord, guessLetter, guesses, usedWords, gameState, correctLetters } = useHangman()
 
@@ -86,15 +65,20 @@ useHead({
 
 
 <template>
-<div>
-    <NuxtRouteAnnouncer />
-    <header>
-      <h1>Hangman</h1>
-      <button @click="useToggleDark()">
-      Is Dark: {{ isDark }}
-    </button>
-    </header>
-    <div class="min-h-screen">
+<UApp>
+  <NuxtRouteAnnouncer />
+
+    <UHeader :toggle="false">
+      <template #title>
+        <h1>Hangman</h1>
+      </template>
+      <template #right>
+        <UColorModeSwitch />
+      </template>
+    </UHeader>
+
+    <UMain >
+      <UContainer>
       <div>Score: <span>{{ score }}</span> </div>
       <div>Remaining Guesses: <span>{{ remainingGuesses }}</span> </div>
       <div class="h-full">
@@ -127,7 +111,7 @@ useHead({
         </div>
         {{ guess }}
         <form @submit.prevent="handleGuessWord">
-          <input type="text" v-model.trim="guess" />
+          <UInput icon="i-lucide-search" size="xl" placeholder="Guess word..." type="text" v-model.trim="guess" />
           <button>Guess Word</button>
         </form>
         
@@ -135,8 +119,10 @@ useHead({
         <Keyboard />
         <button @click="showWord">Show Word</button>
       </div>
-  </div>
-</div>
+    </UContainer>
+    </UMain>
+
+</UApp>
 </template>
 
 <style>

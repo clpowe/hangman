@@ -1,3 +1,8 @@
 export default defineAppConfig({
-  foo: 'bar'
+  ui:{
+    colors:{
+      primary: 'pink',
+      neutral: 'neutral'
+    }
+  }
 })

@@ -58,7 +58,6 @@ export const useHangman = () => {
   };
 
   const guessLetter = (letter: string) => {
-    console.log(letter)
     const lower = letter.toLowerCase();
     if (guesses.value.includes(lower)) {
       return;

@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   },
 
   extends: [
-    '../layers/ui',
-    '../layers/api'
+    './layers/ui',
+    './layers/api'
   ],
 
   runtimeConfig: {
@@ -23,8 +23,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/scripts',
     '@vueuse/nuxt',
-    '@unocss/nuxt',
-    'reka-ui/nuxt'
+    "@nuxt/ui-pro"
   ],
 
   css: ['~/assets/css/main.css']
